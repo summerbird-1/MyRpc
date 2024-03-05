@@ -5,22 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd8ef96c-5214-4d43-9c71-e66a219ccbb8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rpc-api/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-api/src/main/java/com/zjz/HelloObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-api/src/main/java/com/zjz/HelloService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-client/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-common/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/entity/RpcRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/entity/RpcResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/enums/ResponseCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-core/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/client/RpcClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/client/RpcClientProxy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/server/RpcServer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/server/WorkerThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-server/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/HelloServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/TestServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/enums/RpcError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/exception/RpcException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-server/src/main/resources/log4j.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/enums/ResponseCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/enums/ResponseCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-common/target/classes/com/zjz/enums/ResponseCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-common/target/classes/com/zjz/enums/ResponseCode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/client/RpcClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/client/RpcClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/client/RpcClientProxy.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/client/RpcClientProxy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/server/RpcServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/server/RpcServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/server/WorkerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/server/RequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/client/RpcClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/client/RpcClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/client/RpcClientProxy.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/client/RpcClientProxy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/server/RpcServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/server/RpcServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/server/WorkerThread.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,13 +73,20 @@
       <recent name="com.zjz" />
     </key>
   </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
   <component name="RunManager" selected="Application.TestClient">
     <configuration name="TestClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.zjz.TestClient" />
       <module name="rpc-client" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.zjz.*" />
+          <option name="PATTERN" value="com.zjz.exception.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -94,7 +99,7 @@
       <module name="rpc-server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.zjz.*" />
+          <option name="PATTERN" value="com.zjz.exception.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -117,7 +122,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1709625584510</updated>
-      <workItem from="1709625585665" duration="4321000" />
+      <workItem from="1709625585665" duration="7845000" />
     </task>
     <servers />
   </component>

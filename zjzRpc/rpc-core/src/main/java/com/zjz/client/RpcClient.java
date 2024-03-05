@@ -1,6 +1,10 @@
 package com.zjz.client;
 
 import com.zjz.entity.RpcRequest;
+import com.zjz.entity.RpcResponse;
+import com.zjz.enums.ResponseCode;
+import com.zjz.enums.RpcError;
+import com.zjz.exception.RpcException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -24,15 +28,25 @@ public class RpcClient {
      * @return 返回服务端处理结果，如果通信或处理失败则返回null。
      */
     public Object sendRequest(RpcRequest rpcRequest, String host, int port){
-        try(Socket socket = new Socket(host, port)){ // 建立与服务端的连接
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream()); // 创建对象输出流
-            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream()); // 创建对象输入流
-            objectOutputStream.writeObject(rpcRequest); // 将请求对象写入输出流
-            objectOutputStream.flush(); // 刷新输出流，确保请求被发送
-            return objectInputStream.readObject(); // 读取服务端返回的对象
-        }catch (IOException | ClassNotFoundException e){
-            log.error("调用失败", e); // 记录调用失败的日志
-            return null;
-        }
+        try (Socket socket = new Socket(host, port)) {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            objectOutputStream.writeObject(rpcRequest);
+            objectOutputStream.flush();
+            RpcResponse rpcResponse = (RpcResponse) objectInputStream.readObject();
+            if(rpcResponse == null) {
+                log.error("服务调用失败，service：{}", rpcRequest.getInterfaceName());
+                throw new RpcException(RpcError.SERVICE_INVOCATION_FAILURE, " service:" + rpcRequest.getInterfaceName());
+            }
+            if(rpcResponse.getStatusCode() == null || rpcResponse.getStatusCode() != ResponseCode.SUCCESS.getCode()) {
+                log.error("调用服务失败, service: {}, response:{}", rpcRequest.getInterfaceName(), rpcResponse);
+                throw new RpcException(RpcError.SERVICE_INVOCATION_FAILURE, " service:" + rpcRequest.getInterfaceName());
+            }
+            return rpcResponse.getData();
+        } catch (IOException | ClassNotFoundException e) {
+                 log.error("调用时有错误发生", e);
+                 throw new RpcException("服务调用失败",e);
+            }
+
     }
 }

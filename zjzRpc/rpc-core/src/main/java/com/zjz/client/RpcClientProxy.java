@@ -2,6 +2,7 @@ package com.zjz.client;
 
 import com.zjz.entity.RpcRequest;
 import com.zjz.entity.RpcResponse;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -10,6 +11,7 @@ import java.lang.reflect.Proxy;
 /**
  * RPC客户端代理类，用于动态生成RPC客户端代理对象。
  */
+@Slf4j
 public class RpcClientProxy implements InvocationHandler {
     private String host; // 服务端主机地址
     private int port; // 服务端端口号
@@ -49,6 +51,7 @@ public class RpcClientProxy implements InvocationHandler {
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        log.info("调用方法：{}#{}" ,method.getDeclaringClass().getName() , method.getName());
         // 构造RPC请求
         RpcRequest rpcRequest = RpcRequest.builder()
                 .interfaceName(method.getDeclaringClass().getName())
@@ -58,6 +61,6 @@ public class RpcClientProxy implements InvocationHandler {
                 .build();
         // 创建RPC客户端并发送请求，处理响应
         RpcClient rpcClient = new RpcClient();
-        return ((RpcResponse<?>)rpcClient.sendRequest(rpcRequest, host, port)).getData();
+        return rpcClient.sendRequest(rpcRequest, host, port);
     }
 }
