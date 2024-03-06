@@ -2,6 +2,7 @@ package com.zjz;
 
 import com.zjz.registry.DefaultServiceRegistry;
 import com.zjz.registry.ServiceRegistry;
+import com.zjz.serializer.KryoSerializer;
 import com.zjz.socket.server.SocketServer;
 
 public class SocketServerTest {
@@ -21,7 +22,7 @@ public class SocketServerTest {
 
         // 创建RPC服务器，并使用服务注册表
         SocketServer rpcServer = new SocketServer(serviceRegistry);
-
+        rpcServer.setSerializer(new KryoSerializer());
         // 启动RPC服务器，监听8080端口
         rpcServer.start(8080);
     }

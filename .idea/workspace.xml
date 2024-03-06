@@ -5,13 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd8ef96c-5214-4d43-9c71-e66a219ccbb8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/serializer/HessianSerializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/enums/SerializerCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/enums/SerializerCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/utils/ObjectReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/utils/ObjectWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-client/src/main/java/com/zjz/NettyClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-client/src/main/java/com/zjz/NettyClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-client/src/main/java/com/zjz/SocketClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-client/src/main/java/com/zjz/SocketClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/enums/RpcError.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/enums/RpcError.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RpcClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RpcClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RpcServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RpcServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/client/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/client/NettyClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/server/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/server/NettyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/serializer/CommonSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/serializer/CommonSerializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/serializer/JsonSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/serializer/JsonSerializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/client/SocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/server/RequestHandlerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/server/RequestHandlerThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/server/SocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/server/SocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/NettyServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/NettyServerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/SocketServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/SocketServerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +159,7 @@
       <option name="presentableId" value="Default" />
       <updated>1709625584510</updated>
       <workItem from="1709625585665" duration="7845000" />
-      <workItem from="1709638076218" duration="13780000" />
+      <workItem from="1709638076218" duration="16497000" />
     </task>
     <servers />
   </component>

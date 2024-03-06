@@ -4,11 +4,12 @@ import com.zjz.RequestHandler;
 import com.zjz.entity.RpcRequest;
 import com.zjz.entity.RpcResponse;
 import com.zjz.registry.ServiceRegistry;
+import com.zjz.serializer.CommonSerializer;
+import com.zjz.utils.ObjectReader;
+import com.zjz.utils.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 @Slf4j
@@ -17,10 +18,12 @@ public class RequestHandlerThread implements Runnable{
     private Socket socket;
     private RequestHandler requestHandler;
     private ServiceRegistry serviceRegistry;
-    public RequestHandlerThread(Socket socket, RequestHandler requestHandler, ServiceRegistry serviceRegistry){
+    private CommonSerializer serializer;
+    public RequestHandlerThread(Socket socket, RequestHandler requestHandler, ServiceRegistry serviceRegistry, CommonSerializer serializer){
         this.socket = socket;
         this.requestHandler = requestHandler;
         this.serviceRegistry = serviceRegistry;
+        this.serializer = serializer;
     }
     /**
      * 重写的run方法是线程的执行体。
@@ -28,17 +31,16 @@ public class RequestHandlerThread implements Runnable{
      */
     @Override
     public void run() {
-        try(ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream())){
-            // 从输入流读取RPC请求
-            RpcRequest rpcRequest = (RpcRequest)objectInputStream.readObject();
+        try (InputStream inputStream = socket.getInputStream();
+             OutputStream outputStream = socket.getOutputStream()) {
+            RpcRequest rpcRequest = (RpcRequest) ObjectReader.readObject(inputStream);
             String interfaceName = rpcRequest.getInterfaceName();
             Object service = serviceRegistry.getService(interfaceName);
             Object result =  requestHandler.handle(rpcRequest,service);
             // 将调用结果封装成RPC响应，写入输出流
-            objectOutputStream.writeObject(RpcResponse.success(result));
-            objectOutputStream.flush();
-        }catch (IOException | ClassNotFoundException e){
+            RpcResponse<Object> response = RpcResponse.success(result);
+            ObjectWriter.writeObject(outputStream, response, serializer);
+        } catch (IOException e) {
             // 记录异常信息
             log.error("调用或发送时有错误发生",e);
         }

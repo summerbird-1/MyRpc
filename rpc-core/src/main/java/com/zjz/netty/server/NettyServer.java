@@ -3,6 +3,9 @@ package com.zjz.netty.server;
 import com.zjz.RpcServer;
 import com.zjz.codec.CommonDecoder;
 import com.zjz.codec.CommonEncoder;
+import com.zjz.enums.RpcError;
+import com.zjz.exception.RpcException;
+import com.zjz.serializer.CommonSerializer;
 import com.zjz.serializer.HessianSerializer;
 import com.zjz.serializer.JsonSerializer;
 import com.zjz.serializer.KryoSerializer;
@@ -24,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NettyServer implements RpcServer {
 
+    private CommonSerializer serializer;
     /**
      * 启动服务器，监听指定端口。
      *
@@ -31,6 +35,10 @@ public class NettyServer implements RpcServer {
      */
     @Override
     public void start(int port) {
+        if(serializer == null) {
+            log.error("未设置序列化器");
+            throw new RpcException(RpcError.SERIALIZER_NOT_FOUND);
+        }
         // 创建NIO事件循环组，用于处理连接接受和IO操作
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -49,9 +57,7 @@ public class NettyServer implements RpcServer {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             // 添加编解码器和自定义处理器到通道管道
-//                            pipeline.addLast(new CommonEncoder(new JsonSerializer()));
-//                            pipeline.addLast(new CommonEncoder(new KryoSerializer()));
-                            pipeline.addLast(new CommonEncoder(new HessianSerializer()));
+                            pipeline.addLast(new CommonEncoder(serializer));
                             pipeline.addLast(new CommonDecoder());
                             pipeline.addLast(new NettyServerHandler());
                         }
@@ -68,5 +74,10 @@ public class NettyServer implements RpcServer {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
+    }
+
+    @Override
+    public void setSerializer(CommonSerializer serializer) {
+        this.serializer = serializer;
     }
 }
