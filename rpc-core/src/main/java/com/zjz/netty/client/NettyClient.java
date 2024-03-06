@@ -20,6 +20,9 @@ import io.netty.util.AttributeKey;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.InetSocketAddress;
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * Netty实现的RPC客户端。
  */
@@ -60,21 +63,11 @@ public class NettyClient implements RpcClient {
             log.error("未设置序列化器");
             throw new RpcException(RpcError.SERIALIZER_NOT_FOUND);
         }
-        bootstrap.handler(new ChannelInitializer<SocketChannel>() {
-            @Override
-            protected void initChannel(SocketChannel ch) {
-                ChannelPipeline pipeline = ch.pipeline();
-                pipeline.addLast(new CommonDecoder())
-                        .addLast(new CommonEncoder(serializer))
-                        .addLast(new NettyClientHandler());
-            }
-        });
+        AtomicReference<Object> result = new AtomicReference<>(null);
         try{
-            // 连接到服务器
-            ChannelFuture future = bootstrap.connect(host, port).sync();
-            log.info("客户端连接到服务器{}：{}",host,port);
-            Channel channel = future.channel();
-            if(channel != null){
+            // 连接到服务器,修改方案，提供了客户端连接失败重试机制
+            Channel channel = ChannelProvider.get(new InetSocketAddress(host, port), serializer);
+            if(channel.isActive()) {
                 // 写入并刷新请求到通道
                 channel.writeAndFlush(rpcRequest).addListener(future1 -> {
                     if(future1.isSuccess()){
@@ -87,12 +80,14 @@ public class NettyClient implements RpcClient {
                 AttributeKey<RpcResponse> key = AttributeKey.valueOf("rpcResponse" + rpcRequest.getRequestId());
                 RpcResponse rpcResponse = channel.attr(key).get();
                 RpcMessageChecker.check(rpcRequest, rpcResponse);
-                return rpcResponse.getData();
+                result.set(rpcResponse.getData());
+            }else {
+                System.exit(0);
             }
         }catch (InterruptedException e){
             log.error("发送消息时有错误发生：",e);
         }
-        return null;
+        return result.get();
     }
 
     @Override
