@@ -27,6 +27,7 @@ public class JsonSerializer implements CommonSerializer {
     @Override
     public byte[] serialize(Object obj) {
         try {
+            log.info("JSON序列化中。。。");
             return objectMapper.writeValueAsBytes(obj);
         } catch (JsonProcessingException e) {
             log.error("序列化时有错误发生: {}", e.getMessage());
@@ -50,6 +51,7 @@ public class JsonSerializer implements CommonSerializer {
                 // 如果反序列化得到的是RpcRequest类型，则对其进行特殊处理
                 obj = handleRequest(obj);
             }
+            log.info("JSON反序列化中。。。");
             return obj;
         } catch (IOException e) {
             log.error("反序列化时有错误发生: {}", e.getMessage());
