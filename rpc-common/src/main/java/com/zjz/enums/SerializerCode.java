@@ -14,7 +14,9 @@ public enum SerializerCode {
     // 使用JSON序列化器的标识代码
     JSON(1),
     // 使用Hessian序列化器的标识代码
-    HESSIAN(2);
+    HESSIAN(2),
+    // 使用Protobuf序列化器的标识代码
+    PROTOBUF(3);
 
     // 序列化器的标识码
     private final int code;
