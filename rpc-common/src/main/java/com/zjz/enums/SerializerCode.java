@@ -12,7 +12,9 @@ public enum SerializerCode {
     // 使用Kryo序列化器的标识代码
     KRYO(0),
     // 使用JSON序列化器的标识代码
-    JSON(1);
+    JSON(1),
+    // 使用Hessian序列化器的标识代码
+    HESSIAN(2);
 
     // 序列化器的标识码
     private final int code;

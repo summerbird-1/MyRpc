@@ -1,4 +1,5 @@
 package com.zjz.netty.client;
+import com.zjz.serializer.HessianSerializer;
 import com.zjz.serializer.KryoSerializer;
 import io.netty.bootstrap.Bootstrap;
 import com.zjz.RpcClient;
@@ -46,7 +47,8 @@ public class NettyClient implements RpcClient {
                         ChannelPipeline pipeline = ch.pipeline();
                         pipeline.addLast(new CommonDecoder())
 //                                .addLast(new CommonEncoder(new JsonSerializer()))
-                                .addLast(new CommonEncoder(new KryoSerializer()))
+//                                .addLast(new CommonEncoder(new KryoSerializer()))
+                                .addLast(new CommonEncoder(new HessianSerializer()))
                                 .addLast(new NettyClientHandler());
                     }
                 });
