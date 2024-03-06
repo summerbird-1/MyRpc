@@ -38,7 +38,7 @@ public class RequestHandlerThread implements Runnable{
             Object service = serviceRegistry.getService(interfaceName);
             Object result =  requestHandler.handle(rpcRequest,service);
             // 将调用结果封装成RPC响应，写入输出流
-            RpcResponse<Object> response = RpcResponse.success(result);
+            RpcResponse<Object> response = RpcResponse.success(result, rpcRequest.getRequestId());
             ObjectWriter.writeObject(outputStream, response, serializer);
         } catch (IOException e) {
             // 记录异常信息

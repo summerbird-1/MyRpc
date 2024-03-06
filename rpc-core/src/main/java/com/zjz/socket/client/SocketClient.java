@@ -7,6 +7,7 @@ import com.zjz.enums.ResponseCode;
 import com.zjz.enums.RpcError;
 import com.zjz.exception.RpcException;
 import com.zjz.serializer.CommonSerializer;
+import com.zjz.util.RpcMessageChecker;
 import com.zjz.utils.ObjectReader;
 import com.zjz.utils.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
@@ -68,6 +69,7 @@ public class SocketClient implements RpcClient {
                 log.error("调用服务失败, service: {}, response:{}", rpcRequest.getInterfaceName(), rpcResponse);
                 throw new RpcException(RpcError.SERVICE_INVOCATION_FAILURE, " service:" + rpcRequest.getInterfaceName());
             }
+            RpcMessageChecker.check(rpcRequest, rpcResponse);
             // 返回响应数据
             return rpcResponse.getData();
         } catch (IOException e) {

@@ -4,6 +4,7 @@ import com.zjz.exception.RpcException;
 import com.zjz.serializer.CommonSerializer;
 import com.zjz.serializer.HessianSerializer;
 import com.zjz.serializer.KryoSerializer;
+import com.zjz.util.RpcMessageChecker;
 import io.netty.bootstrap.Bootstrap;
 import com.zjz.RpcClient;
 import com.zjz.codec.CommonDecoder;
@@ -83,8 +84,9 @@ public class NettyClient implements RpcClient {
                     }
                 });
                 channel.closeFuture().sync();
-                AttributeKey<RpcResponse> key = AttributeKey.valueOf("rpcResponse");
+                AttributeKey<RpcResponse> key = AttributeKey.valueOf("rpcResponse" + rpcRequest.getRequestId());
                 RpcResponse rpcResponse = channel.attr(key).get();
+                RpcMessageChecker.check(rpcRequest, rpcResponse);
                 return rpcResponse.getData();
             }
         }catch (InterruptedException e){

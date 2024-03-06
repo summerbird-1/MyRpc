@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.UUID;
+
 /**
  * RPC客户端代理类，用于动态生成RPC客户端代理对象。
  */
@@ -30,22 +32,23 @@ public class RpcClientProxy implements InvocationHandler {
     }
 
     /**
-     * 调用代理对象的方法时，实际上会执行此方法。会根据方法名和参数等信息构造一个RPC请求，
-     * 然后通过RPC客户端发送该请求到服务端，并处理服务端返回的响应。
+     * 当调用代理对象的方法时，实际上会执行此方法。该方法会根据方法名和参数等信息构造一个RPC（远程过程调用）请求，
+     * 然后通过RPC客户端将这个请求发送到服务端，并处理服务端返回的响应。
      *
-     * @param proxy 代理对象。
-     * @param method 被调用的方法。
-     * @param args 方法调用时传入的参数。
-     * @return 返回方法的执行结果。
-     * @throws Throwable 如果执行过程中有异常发生，则抛出。
+     * @param proxy 代理对象。代理对象是动态生成的，用于在调用真实对象方法之前或之后添加额外逻辑。
+     * @param method 被调用的方法。包含方法的各种信息，如方法名、返回类型、参数类型等。
+     * @param args 方法调用时传入的参数。数组形式，包含所有传入方法的参数。
+     * @return 返回方法的执行结果。执行结果可以是任意类型，取决于被调用方法的返回类型。
+     * @throws Throwable 如果执行过程中有异常发生，则抛出。代理方法可以捕获并处理这些异常。
      */
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        log.info("调用方法：{}#{}" ,method.getDeclaringClass().getName() , method.getName());
+    public Object invoke(Object proxy, Method method, Object[] args){
+        log.info("调用方法：{}#{}" ,method.getDeclaringClass().getName() , method.getName()); // 记录方法调用信息
         // 构造RPC请求
-        RpcRequest rpcRequest = new RpcRequest(method.getDeclaringClass().getName(),
+        RpcRequest rpcRequest = new RpcRequest(UUID.randomUUID().toString(),method.getDeclaringClass().getName(),
                 method.getName(),args,method.getParameterTypes());
 
-        return rpcClient.sendRequest(rpcRequest);
+        return rpcClient.sendRequest(rpcRequest); // 发送RPC请求并返回结果
     }
+
 }

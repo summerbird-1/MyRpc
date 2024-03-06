@@ -35,7 +35,7 @@ public class RequestHandler{
             method = service.getClass().getMethod(rpcRequest.getMethodName(),rpcRequest.getParamTypes());
         }catch (NoSuchMethodException e){
             // 如果未找到方法，返回方法不存在的错误响应
-            return RpcResponse.fail(ResponseCode.METHOD_NOT_FOUND);
+            return RpcResponse.fail(ResponseCode.METHOD_NOT_FOUND, rpcRequest.getRequestId());
         }
         // 调用找到的方法，并传入rpcRequest中的参数，返回方法的执行结果
         return method.invoke(service, rpcRequest.getParameters());

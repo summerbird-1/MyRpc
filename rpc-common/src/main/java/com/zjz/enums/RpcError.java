@@ -13,7 +13,8 @@ public enum RpcError {
     UNKNOWN_PACKAGE_TYPE("未知的包类型"),
     UNKNOWN_PROTOCOL("未知的协议"),
     UNKNOWN_SERIALIZER("未知的序列化器"),
-    SERIALIZER_NOT_FOUND("未发现该序列化器");
+    SERIALIZER_NOT_FOUND("未发现该序列化器"),
+    RESPONSE_NOT_MATCH("响应与请求号不匹配");
     private final String message;
 
 }
