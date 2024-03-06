@@ -1,7 +1,9 @@
 package com.zjz.entity;
 
 import com.zjz.enums.ResponseCode;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 /**
@@ -9,6 +11,8 @@ import java.io.Serializable;
  * @param <T> 响应数据的类型。
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RpcResponse<T> implements Serializable {
     private Integer statusCode; // 响应状态码
     private String message; // 响应消息
