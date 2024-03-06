@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SocketClientTest {
     public static void main(String[] args) {
 
-        SocketClient socketClient = new SocketClient("127.0.0.1", 8080);
+        SocketClient socketClient = new SocketClient();
         socketClient.setSerializer(new KryoSerializer());
         RpcClientProxy rpcClientProxy = new RpcClientProxy(socketClient);
         HelloService helloService = rpcClientProxy.getProxy(HelloService.class);

@@ -3,14 +3,12 @@ package com.zjz;
 import com.zjz.entity.RpcRequest;
 import com.zjz.entity.RpcResponse;
 import com.zjz.enums.ResponseCode;
+import com.zjz.provider.ServiceProvider;
+import com.zjz.provider.ServiceProviderImpl;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.Socket;
 
 /**
  * WorkerThread类实现了Runnable接口，用于处理具体的RPC请求。
@@ -19,8 +17,10 @@ import java.net.Socket;
  */
 @Slf4j
 public class RequestHandler{
-
-
+    private static final ServiceProvider serviceProvider;
+    static {
+        serviceProvider = new ServiceProviderImpl();
+    }
     /**
      * 调用指定的服务方法。
      * @param rpcRequest 包含远程过程调用所需信息的请求对象，如接口名、方法名、参数类型和参数值。
@@ -41,17 +41,24 @@ public class RequestHandler{
         return method.invoke(service, rpcRequest.getParameters());
     }
 
-    public Object handle(RpcRequest rpcRequest, Object service) {
-        Object result = null;
+    /**
+     * 处理RPC请求的函数。
+     *
+     * @param rpcRequest 包含RPC调用信息的对象，如服务接口名称、方法名称和参数等。
+     * @return 返回RPC调用的结果，其类型依据实际调用的方法而定。
+     */
+    public Object handle(RpcRequest rpcRequest) {
+        Object result = null; // 初始化结果对象为null
+        Object service = serviceProvider.getServiceProvider(rpcRequest.getInterfaceName()); // 获取请求的服务对象
         try{
-            result = invokeMethod(rpcRequest,service);
-            log.info("服务:{} 成功调用方法:{}",rpcRequest.getInterfaceName(),rpcRequest.getMethodName());
+            result = invokeMethod(rpcRequest,service); // 调用请求的方法，并保存结果
+            log.info("服务:{} 成功调用方法:{}",rpcRequest.getInterfaceName(),rpcRequest.getMethodName()); // 记录调用成功的日志
         }catch (IllegalAccessException | InvocationTargetException e){
-            log.error("调用或发送时有错误发生",e);
+            log.error("调用或发送时有错误发生",e); // 记录调用过程中的访问或发送错误
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // 处理类找不到异常，抛出运行时异常
         }
 
-        return result;
+        return result; // 返回调用结果
     }
 }

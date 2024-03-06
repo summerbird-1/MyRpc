@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.zjz</groupId>
         <artifactId>zjzRpc</artifactId>
-        <version>2.0-SNAPSHOT</version>
+        <version>3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>rpc-common</artifactId>

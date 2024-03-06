@@ -12,7 +12,7 @@ public class NettyClientTest {
      */
     public static void main(String[] args) {
         // 创建NettyClient实例，用于与服务器建立连接
-        NettyClient nettyClient = new NettyClient("127.0.0.1", 8080);
+        NettyClient nettyClient = new NettyClient();
 
         nettyClient.setSerializer(new HessianSerializer());
         // 通过NettyClient创建RpcClientProxy实例，提供RPC调用能力

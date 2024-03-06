@@ -6,6 +6,8 @@ import com.zjz.entity.RpcResponse;
 import com.zjz.enums.ResponseCode;
 import com.zjz.enums.RpcError;
 import com.zjz.exception.RpcException;
+import com.zjz.registry.NacosServiceRegistry;
+import com.zjz.registry.ServiceRegistry;
 import com.zjz.serializer.CommonSerializer;
 import com.zjz.util.RpcMessageChecker;
 import com.zjz.utils.ObjectReader;
@@ -13,6 +15,7 @@ import com.zjz.utils.ObjectWriter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 /**
@@ -22,19 +25,15 @@ import java.net.Socket;
 @Slf4j
 public class SocketClient implements RpcClient {
 
-    private final String host; // 服务器主机地址
-    private final int port; // 服务器端口号
+    private final ServiceRegistry serviceRegistry;
 
     private  CommonSerializer serializer; // 序列化器
 
     /**
-     * SocketClient 构造函数。
-     * @param host 服务器的主机地址。
-     * @param port 服务器的端口号。
+     * SocketClient 构造函数。初始化服务注册表。
      */
-    public SocketClient(String host, int port){
-        this.host = host;
-        this.port = port;
+    public SocketClient(){
+     this.serviceRegistry = new NacosServiceRegistry();
     }
 
     /**
@@ -49,7 +48,9 @@ public class SocketClient implements RpcClient {
             log.error("未设置序列化器");
             throw new RpcException(RpcError.SERIALIZER_NOT_FOUND);
         }
-        try (Socket socket = new Socket(host, port)) { // 创建socket连接
+        InetSocketAddress inetSocketAddress = serviceRegistry.lookupService(rpcRequest.getInterfaceName());
+        try (Socket socket = new Socket()) { // 创建socket连接
+            socket.connect(inetSocketAddress);
             OutputStream outputStream = socket.getOutputStream();
             InputStream inputStream = socket.getInputStream();
 
@@ -81,7 +82,7 @@ public class SocketClient implements RpcClient {
 
     /**
      * 设置序列化器。
-     * @param serializer 序列化器对象。
+     * @param serializer 序列化器对象。用于设置客户端使用的序列化方式。
      */
     @Override
     public void setSerializer(CommonSerializer serializer) {

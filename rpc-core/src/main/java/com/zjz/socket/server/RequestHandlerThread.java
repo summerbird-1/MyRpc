@@ -3,6 +3,7 @@ package com.zjz.socket.server;
 import com.zjz.RequestHandler;
 import com.zjz.entity.RpcRequest;
 import com.zjz.entity.RpcResponse;
+import com.zjz.provider.ServiceProvider;
 import com.zjz.registry.ServiceRegistry;
 import com.zjz.serializer.CommonSerializer;
 import com.zjz.utils.ObjectReader;
@@ -35,8 +36,7 @@ public class RequestHandlerThread implements Runnable{
              OutputStream outputStream = socket.getOutputStream()) {
             RpcRequest rpcRequest = (RpcRequest) ObjectReader.readObject(inputStream);
             String interfaceName = rpcRequest.getInterfaceName();
-            Object service = serviceRegistry.getService(interfaceName);
-            Object result =  requestHandler.handle(rpcRequest,service);
+            Object result =  requestHandler.handle(rpcRequest);
             // 将调用结果封装成RPC响应，写入输出流
             RpcResponse<Object> response = RpcResponse.success(result, rpcRequest.getRequestId());
             ObjectWriter.writeObject(outputStream, response, serializer);
