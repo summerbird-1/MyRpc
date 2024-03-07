@@ -31,12 +31,13 @@ import java.net.InetSocketAddress;
 @Slf4j
 public class NettyServer implements RpcServer {
 
-    private CommonSerializer serializer;
+
     private final ServiceRegistry serviceRegistry;
     private final ServiceProvider serviceProvider;
 
     private final String host;
     private final int port;
+    private final CommonSerializer serializer;
     /**
      * 构造函数，指定服务器监听的主机和端口。
      *
@@ -44,10 +45,14 @@ public class NettyServer implements RpcServer {
      * @param port 服务器监听的端口。
      */
     public NettyServer(String host, int port) {
+       this(host, port, DEFAULT_SERIALIZER);
+    }
+    public NettyServer(String host, int port, Integer serializer) {
         this.host = host;
         this.port = port;
         serviceRegistry = new NacosServiceRegistry();
         serviceProvider = new ServiceProviderImpl();
+        this.serializer = CommonSerializer.getByCode(serializer);
     }
     /**
      * 启动服务器
@@ -57,6 +62,7 @@ public class NettyServer implements RpcServer {
      */
     @Override
     public void start() {
+        ShutdownHook.getShutdownHook().addClearAllHook();
         // 创建NIO事件循环组，用于处理连接接受和IO操作
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -82,7 +88,7 @@ public class NettyServer implements RpcServer {
                     });
             // 绑定端口并启动服务器，同步等待端口绑定成功
             ChannelFuture future = serverBootstrap.bind(host, port).sync();
-            ShutdownHook.getShutdownHook().addClearAllHook();
+
             // 等待服务器关闭，确保所有连接都关闭
             future.channel().closeFuture().sync();
         }catch (InterruptedException e){
@@ -95,11 +101,6 @@ public class NettyServer implements RpcServer {
         }
     }
 
-
-    @Override
-    public void setSerializer(CommonSerializer serializer) {
-        this.serializer = serializer;
-    }
 
     /**
      * 发布服务到服务注册中心。

@@ -1,6 +1,7 @@
 package com.zjz;
 
 import com.zjz.netty.client.NettyClient;
+import com.zjz.serializer.CommonSerializer;
 import com.zjz.serializer.HessianSerializer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,9 +13,8 @@ public class NettyClientTest {
      */
     public static void main(String[] args) {
         // 创建NettyClient实例，用于与服务器建立连接
-        NettyClient nettyClient = new NettyClient();
+        NettyClient nettyClient = new NettyClient(CommonSerializer.JSON_SERIALIZER);
 
-        nettyClient.setSerializer(new HessianSerializer());
         // 通过NettyClient创建RpcClientProxy实例，提供RPC调用能力
         RpcClientProxy rpcClientProxy = new RpcClientProxy(nettyClient);
         // 获取HelloService的代理对象，可通过该对象远程调用服务

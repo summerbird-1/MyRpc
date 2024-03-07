@@ -1,5 +1,6 @@
 package com.zjz;
 
+import com.zjz.serializer.CommonSerializer;
 import com.zjz.serializer.ProtostuffSerializer;
 import com.zjz.socket.server.SocketServer;
 
@@ -10,8 +11,7 @@ public class SocketServerTest {
      */
     public static void main(String[] args) {
         HelloServiceImpl2 helloService = new HelloServiceImpl2();
-        SocketServer socketServer = new SocketServer("127.0.0.1", 9091);
-        socketServer.setSerializer(new ProtostuffSerializer());
+        SocketServer socketServer = new SocketServer("127.0.0.1", 9091, CommonSerializer.HESSIAN_SERIALIZER);
         socketServer.publishService(helloService, HelloService.class);
     }
 

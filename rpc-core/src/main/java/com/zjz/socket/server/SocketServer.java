@@ -27,25 +27,29 @@ public class SocketServer implements RpcServer {
     // 线程池，用于处理客户端请求
     private final ExecutorService threadPool;
     // 序列化器，用于序列化和反序列化数据
-    private CommonSerializer serializer;
+
     // 请求处理器
     private RequestHandler requestHandler = new RequestHandler();
     // 服务端绑定的主机地址
     private final String host;
     // 服务端监听的端口号
     private final int port;
+
+    private final CommonSerializer serializer;
     // 服务注册中心，用于注册和发现服务
     private final ServiceRegistry serviceRegistry;
     // 服务提供者，用于管理提供的服务
     private final ServiceProvider serviceProvider;
-
+    public SocketServer(String host, int port){
+        this(host,port,DEFAULT_SERIALIZER);
+    }
     /**
      * 构造函数，初始化Socket服务端的基本配置。
      *
      * @param host 服务绑定的主机地址
      * @param port 服务监听的端口号
      */
-    public SocketServer(String host, int port) {
+    public SocketServer(String host, int port,Integer serializer) {
         this.host = host;
         this.port = port;
         // 初始化线程池
@@ -53,6 +57,7 @@ public class SocketServer implements RpcServer {
         // 初始化服务注册中心和服务提供者
         this.serviceRegistry = new NacosServiceRegistry();
         this.serviceProvider = new ServiceProviderImpl();
+        this.serializer = CommonSerializer.getByCode(serializer);
     }
 
     /**
@@ -84,17 +89,6 @@ public class SocketServer implements RpcServer {
             // 记录服务端启动失败的错误信息
             log.error("服务端启动失败！",e);
         }
-    }
-
-
-    /**
-     * 设置序列化器。
-     *
-     * @param serializer 序列化器实例
-     */
-    @Override
-    public void setSerializer(CommonSerializer serializer) {
-        this.serializer = serializer;
     }
 
     /**

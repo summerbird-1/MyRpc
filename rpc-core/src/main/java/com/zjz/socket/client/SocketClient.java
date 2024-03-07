@@ -29,13 +29,21 @@ public class SocketClient implements RpcClient {
 
     private final ServiceDiscovery serviceDiscovery;
 
-    private  CommonSerializer serializer; // 序列化器
+    private  final CommonSerializer serializer; // 序列化器
+    /**
+     * SocketClient的私有构造函数
+     * 该构造函数调用了另一个构造函数SocketClient(DEFAULT_SERIALIZER)，使用默认的序列化器初始化客户端。
+     */
+    private SocketClient(){
+        this(DEFAULT_SERIALIZER);
+    }
 
     /**
      * SocketClient 构造函数。初始化服务注册表。
      */
-    public SocketClient(){
+    public SocketClient(Integer serializer){
      this.serviceDiscovery = new NacosServiceDiscovery();
+     this.serializer = CommonSerializer.getByCode(serializer);
     }
 
     /**
@@ -82,12 +90,4 @@ public class SocketClient implements RpcClient {
 
     }
 
-    /**
-     * 设置序列化器。
-     * @param serializer 序列化器对象。用于设置客户端使用的序列化方式。
-     */
-    @Override
-    public void setSerializer(CommonSerializer serializer) {
-       this.serializer = serializer;
-    }
 }

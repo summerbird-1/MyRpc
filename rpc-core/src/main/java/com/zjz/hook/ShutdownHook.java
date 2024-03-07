@@ -19,7 +19,7 @@ public class ShutdownHook {
         log.info("关闭后将自动注销所有服务");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             NacosUtil.clearRegistry();
-            threadPool.shutdown();
+            ThreadPoolFactory.shutDownAll();
         }));
     }
 

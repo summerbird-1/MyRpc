@@ -5,41 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd8ef96c-5214-4d43-9c71-e66a219ccbb8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/factory/SingletonFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/util/NacosUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/hook/ShutdownHook.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/registry/NacosServiceDiscovery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/registry/ServiceDiscovery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/HelloServiceImpl2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/NettyServerTest2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/util/ThreadPoolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/factory/ThreadPoolFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-client/src/main/java/com/zjz/NettyClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-client/src/main/java/com/zjz/NettyClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-client/src/main/java/com/zjz/SocketClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-client/src/main/java/com/zjz/SocketClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/factory/ThreadPoolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-common/src/main/java/com/zjz/factory/ThreadPoolFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RpcClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RpcClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RpcServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/RpcServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/hook/ShutdownHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/hook/ShutdownHook.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/client/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/client/NettyClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/server/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/server/NettyServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/server/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/netty/server/NettyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/provider/ServiceProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/provider/ServiceProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/provider/ServiceProviderImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/provider/ServiceProviderImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/registry/NacosServiceRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/registry/NacosServiceRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/registry/ServiceRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/registry/ServiceRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/serializer/CommonSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/serializer/CommonSerializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/client/SocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/client/SocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/server/RequestHandlerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/server/SocketRequestHandlerThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/server/SocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/zjz/socket/server/SocketServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/RpcServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/RpcServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/netty/client/NettyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/netty/client/NettyClient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/netty/server/NettyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/netty/server/NettyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/provider/ServiceProvider.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/provider/ServiceProvider.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/provider/ServiceProviderImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/provider/ServiceProviderImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/registry/NacosServiceRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/registry/NacosServiceRegistry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/registry/ServiceRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/registry/ServiceRegistry.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/socket/client/SocketClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/socket/client/SocketClient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/socket/server/SocketServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/zjz/socket/server/SocketServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/HelloServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/HelloServiceImpl1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/NettyServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/NettyServerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/NettyServerTest2.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/NettyServerTest2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/SocketServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-server/src/main/java/com/zjz/SocketServerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rpc-server/target/classes/com/zjz/HelloServiceImpl.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-server/target/classes/com/zjz/NettyServerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-server/target/classes/com/zjz/NettyServerTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rpc-server/target/classes/com/zjz/SocketServerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/rpc-server/target/classes/com/zjz/SocketServerTest.class" afterDir="false" />
     </list>
@@ -112,7 +98,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.SocketServerTest">
+  <component name="RunManager" selected="Application.NettyClientTest">
     <configuration name="NettyClientTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.zjz.NettyClientTest" />
       <module name="rpc-client" />
@@ -193,9 +179,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SocketServerTest" />
         <item itemvalue="Application.NettyClientTest" />
         <item itemvalue="Application.SocketClientTest" />
+        <item itemvalue="Application.SocketServerTest" />
         <item itemvalue="Application.NettyServerTest2" />
         <item itemvalue="Application.TestServer" />
       </list>
@@ -211,7 +197,7 @@
       <updated>1709625584510</updated>
       <workItem from="1709625585665" duration="7845000" />
       <workItem from="1709638076218" duration="27796000" />
-      <workItem from="1709815004839" duration="3820000" />
+      <workItem from="1709815004839" duration="6866000" />
     </task>
     <servers />
   </component>

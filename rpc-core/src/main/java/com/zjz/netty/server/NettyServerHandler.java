@@ -40,25 +40,27 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<RpcRequest> 
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcRequest msg) throws Exception {
+        // 使用线程池异步处理请求，避免阻塞当前IO线程
         threadPool.execute(() -> {
             try {
-                // 日志记录接收到的请求
+                // 记录接收到的请求日志
                 log.info("服务器接收到请求: {}", msg);
 
                 // 处理请求，并获取处理结果
                 Object result = requestHandler.handle(msg);
 
-                // 构造成功响应并写出
+                // 构造响应并写出到通道，成功时关闭连接
                 ChannelFuture future = ctx.writeAndFlush(RpcResponse.success(result, msg.getRequestId()));
 
-                // 添加监听器，完成写操作后关闭通道
-                future.addListener(ChannelFutureListener.CLOSE);
+                // 为写出操作添加监听器，确保在写操作失败时关闭通道
+                future.addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
             } finally {
-                // 无论处理过程如何，最后都释放消息体
+                // 释放RPC请求消息资源，避免内存泄漏
                 ReferenceCountUtil.release(msg);
             }
         });
     }
+
 
 
     /**
