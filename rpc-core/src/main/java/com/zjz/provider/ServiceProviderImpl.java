@@ -20,25 +20,25 @@ public class ServiceProviderImpl implements ServiceProvider {
 
     /**
      * 注册服务到注册表。
-     * @param service 要注册的服务实例。
-     * @param <T> 服务的类型。
+     * 该方法用于将一个服务实例注册到服务注册表中。如果该服务已经注册，则不会重复注册。
+     * @param service 要注册的服务实例。该参数是服务的实例对象，它必须是泛型T的实例。
+     * @param <T> 服务的类型。指定服务的类型，使得方法可以支持不同类型的服務注册。
      */
     @Override
-    public  <T> void addServiceProvider(T service) {
-        String serviceName = service.getClass().getCanonicalName(); // 获取服务的完整类名
-        // 若服务已注册，则直接返回
+    public  <T> void addServiceProvider(T service,Class<T> serviceClass) {
+        String serviceName = serviceClass.getCanonicalName(); // 获取服务的完整类名
+
+        // 检查服务是否已经注册，若已注册，则直接返回
         if(registeredService.contains(serviceName)) return;
-        registeredService.add(serviceName); // 将服务名称添加到已注册服务集合中
-        Class<?>[] interfaces = service.getClass().getInterfaces(); // 获取服务实现的接口数组
-        // 若服务没有实现任何接口，抛出异常
-        if(interfaces.length == 0)
-            throw new RpcException(RpcError.SERVICE_CAN_NOT_BE_NULL);
-        // 为服务的每个接口在serviceMap中添加映射
-        for(Class<?> clazz : interfaces){
-            serviceMap.put(clazz.getCanonicalName(),service);
-        }
-        log.info("向接口：{},注册服务:{}",interfaces,serviceName);
+
+        // 将服务名称添加到已注册服务集合中，并将服务实例添加到服务映射表中
+        registeredService.add(serviceName);
+        serviceMap.put(serviceName, service);
+
+        // 记录服务注册日志
+        log.info("向接口：{},注册服务:{}",service.getClass().getInterfaces(),serviceName);
     }
+
 
     /**
      * 通过服务名称获取服务实例。

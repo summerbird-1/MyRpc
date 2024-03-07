@@ -48,17 +48,28 @@ public class RequestHandler{
      * @return 返回RPC调用的结果，其类型依据实际调用的方法而定。
      */
     public Object handle(RpcRequest rpcRequest) {
-        Object result = null; // 初始化结果对象为null
         Object service = serviceProvider.getServiceProvider(rpcRequest.getInterfaceName()); // 获取请求的服务对象
-        try{
-            result = invokeMethod(rpcRequest,service); // 调用请求的方法，并保存结果
-            log.info("服务:{} 成功调用方法:{}",rpcRequest.getInterfaceName(),rpcRequest.getMethodName()); // 记录调用成功的日志
-        }catch (IllegalAccessException | InvocationTargetException e){
-            log.error("调用或发送时有错误发生",e); // 记录调用过程中的访问或发送错误
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e); // 处理类找不到异常，抛出运行时异常
-        }
+        return invokeTargetMethod(rpcRequest, service); // 返回调用结果
+    }
 
-        return result; // 返回调用结果
+    /**
+     * 调用目标方法。
+     *
+     * @param rpcRequest 包含RPC调用所需全部信息的对象，如方法名、参数类型和参数值等。
+     * @param service 要调用方法的服务对象。
+     * @return 返回方法调用的结果。如果方法调用失败，则返回一个包含错误信息的RpcResponse对象。
+     */
+    private Object invokeTargetMethod(RpcRequest rpcRequest, Object service) {
+        Object result;
+        try {
+            // 通过反射获取方法对象，并调用方法
+            Method method = service.getClass().getMethod(rpcRequest.getMethodName(), rpcRequest.getParamTypes());
+            result = method.invoke(service, rpcRequest.getParameters());
+            log.info("服务:{} 成功调用方法:{}", rpcRequest.getInterfaceName(), rpcRequest.getMethodName());
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+            // 如果方法不存在或调用失败，则返回方法未找到的错误响应
+            return RpcResponse.fail(ResponseCode.METHOD_NOT_FOUND, rpcRequest.getRequestId());
+        }
+        return  result;
     }
 }

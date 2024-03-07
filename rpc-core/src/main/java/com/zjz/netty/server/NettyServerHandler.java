@@ -3,9 +3,8 @@ package com.zjz.netty.server;
 import com.zjz.RequestHandler;
 import com.zjz.entity.RpcRequest;
 import com.zjz.entity.RpcResponse;
-import com.zjz.provider.ServiceProviderImpl;
-import com.zjz.provider.ServiceProvider;
-import com.zjz.util.ThreadPoolFactory;
+import com.zjz.factory.SingletonFactory;
+import com.zjz.factory.ThreadPoolFactory;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,13 +17,14 @@ import java.util.concurrent.ExecutorService;
 @Slf4j
 public class NettyServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
-    private static RequestHandler requestHandler;
+    private  RequestHandler requestHandler;
     private static final String THREAD_NAME_PREFIX = "netty-server-handler";
-    private static final ExecutorService threadPool;
-    static {
-        requestHandler = new RequestHandler();
-        threadPool = ThreadPoolFactory.createDefaultThreadPool(THREAD_NAME_PREFIX);
+    private  final ExecutorService threadPool;
+    public NettyServerHandler() {
+        this.requestHandler = SingletonFactory.getInstance(RequestHandler.class);
+        this.threadPool = ThreadPoolFactory.createDefaultThreadPool(THREAD_NAME_PREFIX);
     }
+
 
     /**
      * 当通道读取到数据时的处理逻辑。具体步骤包括：

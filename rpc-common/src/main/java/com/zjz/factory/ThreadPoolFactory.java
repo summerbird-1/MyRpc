@@ -1,4 +1,4 @@
-package com.zjz.util;
+package com.zjz.factory;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 

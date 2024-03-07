@@ -4,12 +4,13 @@ import com.zjz.RequestHandler;
 import com.zjz.RpcServer;
 import com.zjz.enums.RpcError;
 import com.zjz.exception.RpcException;
+import com.zjz.hook.ShutdownHook;
 import com.zjz.provider.ServiceProvider;
 import com.zjz.provider.ServiceProviderImpl;
 import com.zjz.registry.NacosServiceRegistry;
 import com.zjz.registry.ServiceRegistry;
 import com.zjz.serializer.CommonSerializer;
-import com.zjz.util.ThreadPoolFactory;
+import com.zjz.factory.ThreadPoolFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -56,21 +57,35 @@ public class SocketServer implements RpcServer {
 
     /**
      * 启动服务端，开始监听客户端请求。
+     * 该方法不接受参数，也不返回任何值。
+     * 主要步骤包括：
+     * 1. 绑定服务端口；
+     * 2. 日志记录服务启动信息；
+     * 3. 添加关闭钩子以清理资源；
+     * 4. 循环监听客户端连接，并为每个连接创建处理线程。
      */
     public void start(){
-        try(ServerSocket serverSocket = new ServerSocket(port)){
-            log.info("服务端正在启动...");
+        // 使用try-with-resources语句自动关闭ServerSocket
+        try(ServerSocket serverSocket = new ServerSocket()){
+            // 绑定服务端口
+            serverSocket.bind(new InetSocketAddress(host, port));
+            log.info("服务器启动……");
+            // 添加关闭钩子，以在程序退出时执行清理逻辑
+            ShutdownHook.getShutdownHook().addClearAllHook();
             Socket socket;
-            // 循环监听客户端连接，并处理请求
+            // 循环监听客户端连接
             while((socket = serverSocket.accept()) != null){
+                // 记录客户端连接信息
                 log.info("消费者连接：{}：{}" , socket.getInetAddress() , socket.getPort());
-                // 使用线程池处理客户端请求
-                threadPool.execute(new RequestHandlerThread(socket, requestHandler, serviceRegistry,serializer));
+                // 使用线程池处理客户端请求，避免直接创建大量线程影响性能
+                threadPool.execute(new SocketRequestHandlerThread(socket, requestHandler, serializer));
             }
         }catch (IOException e){
+            // 记录服务端启动失败的错误信息
             log.error("服务端启动失败！",e);
         }
     }
+
 
     /**
      * 设置序列化器。
@@ -90,14 +105,14 @@ public class SocketServer implements RpcServer {
      * @param <T> 服务接口类型
      */
     @Override
-    public <T> void publishService(Object service, Class<T> serviceClass) {
+    public <T> void publishService(T service, Class<T> serviceClass) {
         // 检查序列化器是否已设置
         if(serializer == null) {
             log.error("未设置序列化器");
             throw new RpcException(RpcError.SERIALIZER_NOT_FOUND);
         }
         // 添加服务到服务提供者
-        serviceProvider.addServiceProvider(service);
+        serviceProvider.addServiceProvider(service,serviceClass);
         // 注册服务到服务注册中心
         serviceRegistry.register(serviceClass.getCanonicalName(), new InetSocketAddress(host, port));
         // 启动服务端

@@ -6,7 +6,9 @@ import com.zjz.entity.RpcResponse;
 import com.zjz.enums.ResponseCode;
 import com.zjz.enums.RpcError;
 import com.zjz.exception.RpcException;
+import com.zjz.registry.NacosServiceDiscovery;
 import com.zjz.registry.NacosServiceRegistry;
+import com.zjz.registry.ServiceDiscovery;
 import com.zjz.registry.ServiceRegistry;
 import com.zjz.serializer.CommonSerializer;
 import com.zjz.util.RpcMessageChecker;
@@ -25,7 +27,7 @@ import java.net.Socket;
 @Slf4j
 public class SocketClient implements RpcClient {
 
-    private final ServiceRegistry serviceRegistry;
+    private final ServiceDiscovery serviceDiscovery;
 
     private  CommonSerializer serializer; // 序列化器
 
@@ -33,7 +35,7 @@ public class SocketClient implements RpcClient {
      * SocketClient 构造函数。初始化服务注册表。
      */
     public SocketClient(){
-     this.serviceRegistry = new NacosServiceRegistry();
+     this.serviceDiscovery = new NacosServiceDiscovery();
     }
 
     /**
@@ -48,7 +50,7 @@ public class SocketClient implements RpcClient {
             log.error("未设置序列化器");
             throw new RpcException(RpcError.SERIALIZER_NOT_FOUND);
         }
-        InetSocketAddress inetSocketAddress = serviceRegistry.lookupService(rpcRequest.getInterfaceName());
+        InetSocketAddress inetSocketAddress = serviceDiscovery.lookupService(rpcRequest.getInterfaceName());
         try (Socket socket = new Socket()) { // 创建socket连接
             socket.connect(inetSocketAddress);
             OutputStream outputStream = socket.getOutputStream();
